@@ -50,10 +50,11 @@ alexa:
   smarter_home:  #enable custom Alexa component
 
 media_player:
-  - platform:  broadlink  #enable broadlink component
-    host: 192.168.1.11    #ip address of broadlink device
-    mac: '77:FF:77:55:CC:66'  # mac address of broadlink device
+  - platform:  broadlink  #enable broadlink component. options: broadlink / openmqtt
+    host: 192.168.1.11    #ip address of broadlink device - not needed for openmqtt
+    mac: '77:FF:77:55:CC:66'  # mac address of broadlink device - not needed for openmqtt
     name: tv                  # friendly name used by Alexa or HA console
+    command_topic: /mqtt/command/topic  # required by openmqtt
     ping_host: 192.168.1.12  # ip adress of smart tv to detect it's state  - optional
     channels:     # list by lowercase name and associated channel number - used for finding channels by name - optional
         city: 7
