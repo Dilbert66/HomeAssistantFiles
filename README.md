@@ -136,10 +136,14 @@ Alexa, channel down on TV
 Alexa, change channel to 30 on TV
 Alexa, change channel to FOX on TV 
 
+
 ### Media control
 Alexa, play on TV
 Alexa, stop/pause on TV
-Alexa, resume on TV``
+Alexa, resume on TV
+
+### Input control
+Alexa, change input to HDMI 1 on TV
 ```
 
 
