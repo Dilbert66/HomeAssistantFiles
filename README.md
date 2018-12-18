@@ -43,7 +43,6 @@ Added input_text config option in configuration.yaml to allow changing channel f
 
 ##configuration.yaml
 
-```
 api:  # activate web api
 
 alexa:
