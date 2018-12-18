@@ -20,14 +20,16 @@ an Alexa phrase such as Alexa, change channel to 123 on TV or Alexa, change chan
 - Volume stepped control via Alexa . For example say Alexa, increase volume by 10 on TV.
 
 ## Code changes
-**Alexa component** - added ChannelController capability that adds voice control of all channel changing activities.
+**Alexa component** <br/>
+- added ChannelController capability that adds voice control of all channel changing activities.<br/>
 - added stepped voice control.  I've called the component smarter_home.py so not to conflic with the existing 
 HA alexa component.  You can't use both at the same time as they both use the same /alexa/smart_home endpoint.
 
 
-**broadlink.py** - added channel tuning function as well as play/pause capability.  Also converted the code to use inline configuration options in the configuration.yaml file  instead of using external ini files for code configuration.  All configs are setup with the broadlink option in the configuraiton.yaml file. I used the media_player.play_media function for channel control. 
+**broadlink.py** <br/>
+- added channel tuning function as well as play/pause capability.  Also converted the code to use inline configuration options in the configuration.yaml file  instead of using external ini files for code configuration.  All configs are setup with the broadlink option in the configuraiton.yaml file. I used the media_player.play_media function for channel control. <br/>
 
-Added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
+- Added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
 ## Installation
 ## NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
