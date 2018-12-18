@@ -43,7 +43,7 @@ Added input_text config option in configuration.yaml to allow changing channel f
 
 ##configuration.yaml
 
-...
+```
 api:  # activate web api
 
 alexa:
@@ -68,7 +68,7 @@ media_player:
 
       - name: "Chromecast"
         code: 
-...
+```
 api:
 
 alexa:
@@ -122,10 +122,10 @@ input_text:
         pattern: '[a-z|A-Z|0-9]*'
         initial: '' 
  
-...
+```
 
 ##automations.yaml
-...
+```
 #waits for input from the input_text function above and sends it to the media_player.play_media service of the broadlink component
 - alias: Send Channel
   trigger:
@@ -139,7 +139,7 @@ input_text:
          media_content_type: 'channel'
 
 
-		 ...
+		 ```
 
 
 
