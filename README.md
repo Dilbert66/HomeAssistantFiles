@@ -20,20 +20,17 @@ an Alexa phrase such as Alexa, change channel to 123 on TV or Alexa, change chan
 - Volume stepped control via Alexa . For example say Alexa, increase volume by 10 on TV.
 
 ## Code changes
-Alexa component - added ChannelController capability that adds voice control of all channel changing activities.
+**Alexa component** - added ChannelController capability that adds voice control of all channel changing activities.
 - added stepped voice control.  I've called the component smarter_home.py so not to conflic with the existing 
 HA alexa component.  You can't use both at the same time as they both use the same /alexa/smart_home endpoint.
 
 
-broadlink.py - added channel tuning function as well as play/pause.  Also converted the code to use the default 
-configuration.yaml format instead of using external *.ini files for code configuration.  All configs are setup with the broadlink 
-option in the configuraiton.yaml file.  Since HA does not by default have channel changing capability, i had to use the
-Play Media function to accomplish this (as used in the samsungtv component) 
+**broadlink.py** - added channel tuning function as well as play/pause capability.  Also converted the code to use inline configuration options in the configuration.yaml file  instead of using external ini files for code configuration.  All configs are setup with the broadlink option in the configuraiton.yaml file. I used the media_player.play_media function for channel control. 
 
 Added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
 ## Installation
-# NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
+## NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
 
 1. Create a "custom_components" directory in your HA configuration directory and copy the alexa and media_player subdirectories into it.
 2. add the config options in your configuration.yaml and automations.yaml.  Of course you'll need to use your own IR codes for the functions.
