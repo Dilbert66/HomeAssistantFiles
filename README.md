@@ -46,8 +46,8 @@ alexa:
   smarter_home:  # activate Alexa component
 
 media_player:
-   - platform:  broadlink
-    host: 192.168.1.11  # ip address of your broadlink device - required
+  ** - platform: **  broadlink
+   ** host: ** 192.168.1.11  # ip address of your broadlink device - required
     mac: '77:FF:77:55:CC:66' # mac address of your broadlink device  - required
     name: tv   # display name of this device - required (used by Alexa)
     ping_host: 192.168.1.12  # optional - smart tv ip address -  if you have a smart tv on the network, this will detect it's state. 
