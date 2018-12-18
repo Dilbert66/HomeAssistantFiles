@@ -46,21 +46,24 @@ alexa:
   smarter_home:  # activate Alexa component
 
 media_player:
-  ** - platform: **  broadlink
-   ** host: ** 192.168.1.11  # ip address of your broadlink device - required
-    mac: '77:FF:77:55:CC:66' # mac address of your broadlink device  - required
-    name: tv   # display name of this device - required (used by Alexa)
-    ping_host: 192.168.1.12  # optional - smart tv ip address -  if you have a smart tv on the network, this will detect it's state. 
-    channels:   # used when you enter or say a channel name instead of entering a channel numerically
-        city: 7
-        pulse: 24
-        amc: 31
-    codes:  # this is the list of your IR codes.  The function names are constants. 
-	sources:  # your input sources. 
-      - name: "Cable" 
-        code: 
-      - name: "Chromecast"
-        code: 
+  **- platform:**  broadlink<br/>
+   **host:** 192.168.1.11  # ip address of your broadlink device - required<br/>
+    **mac**: '77:FF:77:55:CC:66' # mac address of your broadlink device  - required<br/><br/>
+    **name:** tv   # display name of this device - required (used by Alexa)
+    **ping_host:** 192.168.1.12  # optional - smart tv ip address -  if you have a smart tv on the network, this will detect it's state.<br/> 
+    **channels:**   # used when you enter or say a channel name instead of entering a channel numerically<br/>
+        city: 7<br/>
+        pulse: 24<br/>
+        amc: 31<br/>
+    **codes:**  # this is the list of your IR codes.  The function names are constants. <br/>
+     turn_on: <ir code>
+	...<br/>
+     **sources:**  # your input sources. <br/>
+      - name: "Cable" # used for display or by Alexa <br/>
+        code:<ir code> <br/>
+      - name: "Chromecast"<br/>
+        code: <ir code> <br/>
+	...<br/>
 ```
 api:
 
