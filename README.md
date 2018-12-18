@@ -133,7 +133,35 @@ input_text:
 
 
 		 ```
+## Supported Alexa phrases:
+`
+### Power control
+Alexa, turn on TV
+Alexa, turn off TV
+Alexa, power on TV
+Alexa, power on TV
 
+### Volume control
+Alexa, turn up volume by 5 on TV
+Alexa, volume up on TV
+Alexa, volume down on TV
+Alexa, turn up the volume on TV
+Alexa, turn down the volume on TV
+Alexa, mute on TV
+Alexa, unmute on TV
+
+### Channel control
+Alexa, channel up on TV
+Alexa, channel down on TV
+Alexa, change channel to 30 on TV
+Alexa, change channel to FOX on TV 
+
+### Media control
+Alexa, play on TV
+Alexa, stop/pause on TV
+Alexa, resume on TV``
+
+```
 
 
 
