@@ -1,6 +1,6 @@
 # ALEXA - Broadlink - Home Assistant TV controller including channel selection.
 
-This customization uses a modified broadlink.py file from from Vassilis Panos's project at 
+This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
 default Home Assistant Alexa component module.
 
@@ -27,14 +27,14 @@ HA alexa component.  You can't use both at the same time as they both use the sa
 
 
 **broadlink.py** <br/>
-- added channel tuning function as well as play/pause capability.  Also converted the code to use inline configuration options in the configuration.yaml file  instead of using external ini files for code configuration.  All configs are setup with the broadlink option in the configuraiton.yaml file. I used the media_player.play_media function for channel control. <br/>
+- added channel tuning function as well as play/pause capability.  Also converted the code to use inline configuration options within the configuration.yaml file  instead of using external ini files for code configuration.  All configs are setup with the broadlink option in the configuraiton.yaml file. I used the media_player.play_media function for channel control. <br/>
 
-- Added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
+- added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
 ## Installation
 ## NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
 
-1. Create a "custom_components" directory in your HA configuration directory and copy the alexa and media_player subdirectories into it.
+1. create a "custom_components" directory in your HA configuration directory and copy the alexa and media_player subdirectories into it.
 2. add the config options in your configuration.yaml and automations.yaml.  Of course you'll need to use your own IR codes for the functions.
 
 ## configuration.yaml
