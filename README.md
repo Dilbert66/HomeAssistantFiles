@@ -107,8 +107,8 @@ input_text:   # HA input text box used to enter a channel number or channel name
          media_content_id: '{{ states.input_text.tv_channel.state }}'
          media_content_type: 'channel'
 
+```
 
-		 ```
 ## Supported Alexa phrases:
 `
 ### Power control
