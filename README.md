@@ -22,8 +22,9 @@ an Alexa phrase such as Alexa, change channel to 123 on TV or Alexa, change chan
 ## Code changes
 **Alexa component** <br/>
 - added ChannelController capability that adds voice control of all channel changing activities.<br/>
-- added stepped voice control.  I've called the component smarter_home.py so not to conflic with the existing 
-HA alexa component.  You can't use both at the same time as they both use the same /alexa/smart_home endpoint.
+- added stepped voice control. <br/>
+I've called this component smarter_home.py so not to conflict with the existing HA alexa component.  
+You can't use both at the same time as they both use the same /alexa/smart_home endpoint.
 
 
 **broadlink.py** <br/>
