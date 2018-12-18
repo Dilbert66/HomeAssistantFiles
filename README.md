@@ -107,10 +107,11 @@ input_text:   # HA input text box used to enter a channel number or channel name
          media_content_id: '{{ states.input_text.tv_channel.state }}'
          media_content_type: 'channel'
 
+```
 
 
 ## Supported Alexa phrases:
-`
+```
 ### Power control
 Alexa, turn on TV
 Alexa, turn off TV
@@ -136,7 +137,7 @@ Alexa, change channel to FOX on TV
 Alexa, play on TV
 Alexa, stop/pause on TV
 Alexa, resume on TV``
-
+```
 
 
 
