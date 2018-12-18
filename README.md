@@ -40,47 +40,23 @@ Added input_text config option in configuration.yaml to allow changing channel f
 
 ## configuration.yaml
 
-api:  # activate web api
-
-alexa:
-  smarter_home:  # activate Alexa component
-
-media_player:
-  **- platform:**  broadlink<br/>
-   **host:** 192.168.1.11  # ip address of your broadlink device - required<br/>
-    **mac**: '77:FF:77:55:CC:66' # mac address of your broadlink device  - required<br/><br/>
-    **name:** tv   # display name of this device - required (used by Alexa)
-    **ping_host:** 192.168.1.12  # optional - smart tv ip address -  if you have a smart tv on the network, this will detect it's state.<br/> 
-    **channels:**   # used when you enter or say a channel name instead of entering a channel numerically<br/>
-        city: 7<br/>
-        pulse: 24<br/>
-        amc: 31<br/>
-    **codes:**  # this is the list of your IR codes.  The function names are constants. <br/>
-     turn_on: <ir code>
-	...<br/>
-     **sources:**  # your input sources. <br/>
-      - name: "Cable" # used for display or by Alexa <br/>
-        code:<ir code> <br/>
-      - name: "Chromecast"<br/>
-        code: <ir code> <br/>
-	...<br/>
 ```
-api:
+api: #enable api
 
 alexa:
-  smarter_home:
+  smarter_home:  #enable custom Alexa component
 
 media_player:
-  - platform:  broadlink
-    host: 192.168.1.11
-    mac: '77:FF:77:55:CC:66'
-    name: tv 
-    ping_host: 192.168.1.12
-    channels:
+  - platform:  broadlink  #enable broadlink component
+    host: 192.168.1.11    #ip address of broadlink device
+    mac: '77:FF:77:55:CC:66'  # mac address of broadlink device
+    name: tv                  # friendly name used by Alexa or HA console
+    ping_host: 192.168.1.12  # ip adress of smart tv to detect it's state  - optional
+    channels:     # list by lowercase name and associated channel number - used for finding channels by name - optional
         city: 7
         pulse: 24
         amc: 31
-    codes:
+    codes:   # list of functions and associated broadlink ir codes. customize to your own learned devices.  Include digits 0 - 9
         turn_on: JgBQAAABKZEVERQRFBEUERUQFRAVNRUQFTYUNhU1FTUVNRU2FBEVNRUQFTUVEBURFDYVEBUQFRAVNRUQFTYUNhUQFTUVNRU2FAAFFQABKEkTAA0FAAAAAAAAAAA= | JgBkAG5vG1QbVBscG1QbVBtUG1QcUxwbHBwbHBscGxwcUxwcGxwbHBscHBwbVBtUG1QbAATXbm8bVBtUGxwbVBtUG1QbVBtUGxwcGxwcGxwbHBxTHBscHBscGxwcGxxTHFMcUxwADQUAAAAA
         turn_off: JgBQAAABKZEVERQRFBEUERUQFRAVNRUQFTYUNhU1FTUVNRU2FBEVNRUQFTUVEBURFDYVEBUQFRAVNRUQFTYUNhUQFTUVNRU2FAAFFQABKEkTAA0FAAAAAAAAAAA= | JgBkAG5vG1QbVBscG1QbVBtUG1QcUxwbHBwbHBscGxwcUxwcGxwbHBscHBwbVBtUG1QbAATXbm8bVBtUGxwbVBtUG1QbVBtUGxwcGxwcGxwbHBxTHBscHBscGxwcGxxTHFMcUxwADQUAAAAA
         volume_up: JgBYAAABJ5QTEhMSExITEhMSExMSOBITEzcTNxM4EjgSOBM3ExITOBITEjgTEhM3EzcTExITEhMSOBMSEzcTEhMTEjgSOBM3EwAFFQABJ0oSAAxWAAEmShMADQU=
@@ -102,7 +78,7 @@ media_player:
         key_7: JgBkAG5vHFMcUxwbHFMcVBscG1QbVBscHFMcGxwcGxwbVBscGxwcUxwcGxwbVBscG1QcAATUbm8bVBtUGxwcUxxTHBwbVBtUGxwbVBscHBscHBtUGxwbHBxTHBscHBtUGxwbVBsADQUAAAAA
         key_8: JgBkAG5vG1QbVBscHFMcUxxTHFMcUxwcG1QbHBscHBscUxwcGxwbHBwbHBwbVBscG1QbAATVbm8bVBtUGxwcUxxTHFMcUxxTHBwbVBscGxwbHBxTHBwbHBscGxwcGxxTHBwbVBsADQUAAAAA
         key_9: JgBkAG5vG1QbVBscG1QcUxwbHBwbHBtUG1QbHBwbHBwbVBscGxwcUxxTHFMcHBscG1QbAATXb24cUxxTHBwbVBtUGxwbHBwbHFMcUxwcGxwbHBxTHBscHBtUG1QbVBscGxwcUxwADQUAAAAA
-    sources:
+    sources:  # video sources 
       - name: "Cable" 
         code: JgBWAAABJpITERMSExITEhMRExITNxMSEzcTNxM3EzcTNxM3ExITNxM3ExITEhMRExITNxMSExETEhM3EzcTNxM3ExITNxM3EwAFNgABJkkTAAxiAAEmSROSDQU=
 
@@ -110,7 +86,7 @@ media_player:
         code: JgBWAAABJpITERMSExITEhMRExITNxMSEzcTNxM3EzcTNxM3ExITNxMSExITNxMRExITNxMSExETNxM3ExITNxM3ExITNxM3EwAFNgABJkkTAAxiAAEmSROSDQU=
 
 
-input_text:
+input_text:   # HA input text box used to enter a channel number or channel name for channel switching 
     tv_channel:
         name: TV Channel
         min: 0 
