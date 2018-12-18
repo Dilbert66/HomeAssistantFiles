@@ -1,10 +1,10 @@
-#ALEXA - Broadlink - Home Assistant TV controller including channel selection.
+# ALEXA - Broadlink - Home Assistant TV controller including channel selection.
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at 
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
 default Home Assistant Alexa component module.
 
-##Background
+## Background
 I was using the Broadlink Alexa skill and found it had a tendency to keep
  adding extra digits when responding to a change channel command on my TV.  Since I am also using Home Assistant  (with Haaska) at home, I felt I would 
  rather be able to control all aspects of the broadlink from my own system instead of depending on a third party buggy tool which I have no control of.
@@ -12,14 +12,14 @@ After looking around, I could not find anything that was accomplishing all I wan
 Vassilis Broadlink.py component as as base since it had most functions setup.  I would then add the rest of the functions I needed as well as using this as an opportunity to get 
 more familiar with HA and Python.  
 
-##The missing functions:
+## The missing functions:
 
 -  Ability to enter a TV  channel using direct number keypad entry using digits or a TV Callsign or use 
 an Alexa phrase such as Alexa, change channel to 123 on TV or Alexa, change channel to PBS on TV
 - Play/Pause a TV broadcast (I have a PVR)
 - Volume stepped control via Alexa . For example say Alexa, increase volume by 10 on TV.
 
-##Code changes
+## Code changes
 Alexa component - added ChannelController capability that adds voice control of all channel changing activities.
 - added stepped voice control.  I've called the component smarter_home.py so not to conflic with the existing 
 HA alexa component.  You can't use both at the same time as they both use the same /alexa/smart_home endpoint.
@@ -32,16 +32,13 @@ Play Media function to accomplish this (as used in the samsungtv component)
 
 Added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
-##Installation
-#NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
+## Installation
+# NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
 
 1. Create a "custom_components" directory in your HA configuration directory and copy the alexa and media_player subdirectories into it.
 2. add the config options in your configuration.yaml and automations.yaml.  Of course you'll need to use your own IR codes for the functions.
 
-
-
-
-##configuration.yaml
+## configuration.yaml
 
 api:  # activate web api
 
@@ -59,12 +56,9 @@ media_player:
         pulse: 24
         amc: 31
     codes:  # this is the list of your IR codes.  The function names are constants. 
-	
-	
 	sources:  # your input sources. 
       - name: "Cable" 
         code: 
-
       - name: "Chromecast"
         code: 
 ```
@@ -118,12 +112,12 @@ input_text:
         name: TV Channel
         min: 0 
         max: 5 
-        pattern: '[a-z|A-Z|0-9]*'
+        pattern: 'a-z|A-Z|0-9]*'
         initial: '' 
  
 ```
 
-##automations.yaml
+## automations.yaml
 ```
 #waits for input from the input_text function above and sends it to the media_player.play_media service of the broadlink component
 - alias: Send Channel
