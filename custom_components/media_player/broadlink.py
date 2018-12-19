@@ -18,9 +18,7 @@ from homeassistant.const import (
     CONF_HOST, CONF_MAC, CONF_TIMEOUT, STATE_OFF, STATE_ON,
     STATE_PLAYING, STATE_PAUSED, STATE_UNKNOWN, CONF_NAME, CONF_FILENAME)
 from homeassistant.helpers.event import (async_track_state_change)
-#from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.core import callback
-from configparser import ConfigParser
 from base64 import b64encode, b64decode
 
 REQUIREMENTS = ['broadlink==0.9.0']
@@ -48,7 +46,10 @@ CONF_CHANNELS='channels'
 
 CODES_SCHEMA = vol.Schema({cv.slug: cv.string})
 INPUTS_SCHEMA = vol.Schema({'name':cv.string,'code':cv.string})
-CHANNELS_SCHEMA=vol.Schema({cv.slug: cv.string})
+#CHANNELS_SCHEMA=vol.Schema({cv.slug: cv.string})
+CHANNELS_SCHEMA = vol.Schema({'name':cv.string,'channel':cv.string})
+
+
 	
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
@@ -76,12 +77,17 @@ async def async_setup_platform(hass, config, async_add_devices, discovery_info=N
     ir_codes[CONF_INPUTS]={}
     ir_codes[CONF_CHANNELS]={}
     ir_codes[CONF_CODES]=config.get(CONF_CODES)
-    ir_codes[CONF_CHANNELS]=config.get(CONF_CHANNELS)
 
+    for channel in config.get(CONF_CHANNELS):
+        key=channel['name'].lower().strip()
+        ir_codes[CONF_CHANNELS][key]=channel['channel']
+        _LOGGER.debug('adding channel %s,%s', key,channel['channel'])
+
+
+    
     for input in config.get(CONF_INPUTS):
-        key=input['name']
-        val=input['code']
-        ir_codes[CONF_INPUTS][key]=val
+        ir_codes[CONF_INPUTS][input['name']]=input['code']
+
 	
     import broadlink
     

@@ -50,7 +50,7 @@ CONF_COMMAND_TOPIC='command_topic'
 
 CODES_SCHEMA = vol.Schema({cv.slug: cv.string})
 INPUTS_SCHEMA = vol.Schema({'name':cv.string,'code':cv.string})
-CHANNELS_SCHEMA=vol.Schema({cv.slug: cv.string})
+CHANNELS_SCHEMA = vol.Schema({'name':cv.string,'channel':cv.string})
 	
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
@@ -76,22 +76,23 @@ async def async_setup_platform(hass, config, async_add_devices, discovery_info=N
     ir_codes[CONF_INPUTS]={}
     ir_codes[CONF_CHANNELS]={}
     ir_codes[CONF_CODES]=config.get(CONF_CODES)
-    ir_codes[CONF_CHANNELS]=config.get(CONF_CHANNELS)
     ir_codes[CONF_COMMAND_TOPIC]=config.get(CONF_COMMAND_TOPIC)
 
+    for channel in config.get(CONF_CHANNELS):
+        key=channel['name'].lower().strip()
+        ir_codes[CONF_CHANNELS][key]=channel['channel']
+
     for input in config.get(CONF_INPUTS):
-        key=input['name']
-        val=input['code']
-        ir_codes[CONF_INPUTS][key]=val
+        ir_codes[CONF_INPUTS][input['name']]=input['code']
 	
     ping_host = config.get(CONF_PING_HOST)
     power_cons_entity_id = config.get(CONF_POWER_CONS_SENSOR)
     power_cons_threshold = config.get(CONF_POWER_CONS_THRESHOLD)
     
-    async_add_devices([IRMediaPlayer(hass, name, mqtt, ir_codes, ping_host, power_cons_entity_id, power_cons_threshold)], True)
+    async_add_devices([MQTTIRMediaPlayer(hass, name, mqtt, ir_codes, ping_host, power_cons_entity_id, power_cons_threshold)], True)
     
     
-class IRMediaPlayer(MediaPlayerDevice):
+class MQTTIRMediaPlayer(MediaPlayerDevice):
 
     def __init__(self, hass, name, ir_device, ir_codes, ping_host, power_cons_entity_id, power_cons_threshold):
         self._name = name
@@ -164,8 +165,8 @@ class IRMediaPlayer(MediaPlayerDevice):
         for command in commands: 
             payload=command                 
             self._ir_device.async_publish(
-            self.hass, self._commands[CONF_COMMAND_TOPIC],payload ,self._qos 
-            ,self._retain)
+             self.hass, self._commands[CONF_COMMAND_TOPIC],payload ,self._qos 
+               ,self._retain)
             _LOGGER.debug('in openmqtt sent command %s, %s', self._commands[CONF_COMMAND_TOPIC],command)
                 
             if len(commands) > 1:
