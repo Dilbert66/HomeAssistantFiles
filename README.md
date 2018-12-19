@@ -60,7 +60,7 @@ media_player:
     name: tv                  # friendly name used by Alexa or HA console
     command_topic: home/OpenMQTTGateway/commands/IR_GC  # required by openmqtt
     ping_host: 192.168.1.12  # ip adress of smart tv to detect it's state  - optional
-    channels:     # channel name used by alexa or input text box used for finding channels by name - optional
+    channels:     # used with alexa or input text box for finding channels by name - optional
         - name: city  # channel name
           channel: 7  # actual channel number
         - name: pulse24
