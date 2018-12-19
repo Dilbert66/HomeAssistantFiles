@@ -14,7 +14,7 @@ After looking around, I could not find anything that was accomplishing all I wan
 Vassilis Broadlink.py component as as base since it had most functions setup.  I would then add the rest of the functions I needed as well as using this as an opportunity to get 
 more familiar with HA and Python.  
 
-## The missing functions:
+## The missing functions that were added:
 
 -  Ability to enter a TV  channel using direct number keypad entry using digits or a TV Callsign or use 
 an Alexa phrase such as Alexa, change channel to 123 on TV or Alexa, change channel to PBS on TV
@@ -60,10 +60,13 @@ media_player:
     name: tv                  # friendly name used by Alexa or HA console
     command_topic: home/OpenMQTTGateway/commands/IR_GC  # required by openmqtt
     ping_host: 192.168.1.12  # ip adress of smart tv to detect it's state  - optional
-    channels:     # list by lowercase name and associated channel number - used for finding channels by name - optional
-        city: 7
-        pulse: 24
-        amc: 31
+    channels:     # channel name used by alexa or input text box used for finding channels by name - optional
+        - name: city  # channel name
+          channel: 7  # actual channel number
+        - name: pulse24
+          channel: 24
+        - name: amc
+          channel: 31
     codes:   # list of functions and associated broadlink ir codes. customize to your own learned devices.  Include digits 0 - 9
         turn_on: JgBQAAABKZEVERQRFBEUERUQFRAVNRUQFTYUNhU1FTUVNRU2FBEVNRUQFTUVEBURFDYVEBUQFRAVNRUQFTYUNhUQFTUVNRU2FAAFFQABKEkTAA0FAAAAAAAAAAA= | JgBkAG5vG1QbVBscG1QbVBtUG1QcUxwbHBwbHBscGxwcUxwcGxwbHBscHBwbVBtUG1QbAATXbm8bVBtUGxwbVBtUG1QbVBtUGxwcGxwcGxwbHBxTHBscHBscGxwcGxxTHFMcUxwADQUAAAAA
         turn_off: JgBQAAABKZEVERQRFBEUERUQFRAVNRUQFTYUNhU1FTUVNRU2FBEVNRUQFTUVEBURFDYVEBUQFRAVNRUQFTYUNhUQFTUVNRU2FAAFFQABKEkTAA0FAAAAAAAAAAA= | JgBkAG5vG1QbVBscG1QbVBtUG1QcUxwbHBwbHBscGxwcUxwcGxwbHBscHBwbVBtUG1QbAATXbm8bVBtUGxwbVBtUG1QbVBtUGxwcGxwcGxwbHBxTHBscHBscGxwcGxxTHFMcUxwADQUAAAAA
