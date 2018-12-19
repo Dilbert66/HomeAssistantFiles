@@ -55,10 +55,21 @@ alexa:
 
 media_player:
   - platform:  broadlink  #enable broadlink component. options: broadlink / openmqtt
+  
+  #broadlink only options
     host: 192.168.1.11    #ip address of broadlink device - not needed for openmqtt
     mac: '77:FF:77:55:CC:66'  # mac address of broadlink device - not needed for openmqtt
+  ## end broadlink only options
+  
+  ## openmqtt only options
+    command_topics:
+       - topic: "home/OpenMQTTGateway/commands/IR_GC"
+         type: ir   # used to send IR codes - First topic in the list is the default
+       - topic: "home/OpenMQTTGateway/commands/MQTTto433"
+         type: rf  # use to send RF codes. Choose rf type in the codes by prepending rf: to the code ie: "rf:<code>"
+  ## end openmqtt only options
+  
     name: tv                  # friendly name used by Alexa or HA console
-    command_topic: home/OpenMQTTGateway/commands/IR_GC  # required by openmqtt
     ping_host: 192.168.1.12  # ip adress of smart tv to detect it's state  - optional
     channels:     # used with alexa or input text box for finding channels by name - optional
         - name: city  # channel name
