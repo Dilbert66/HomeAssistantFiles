@@ -1,4 +1,3 @@
-
 - alias: Send Channel
   trigger:
     - platform: state
@@ -8,5 +7,17 @@
       data_template: 
          entity_id: media_player.tv
          media_content_id: '{{ states.input_text.tv_channel.state }}'
+         media_content_type: 'channel'
+
+
+- alias: Send tv2 Channel
+  trigger:
+    - platform: state
+      entity_id: input_text.tv2_channel
+  action:
+    - service: media_player.play_media
+      data_template: 
+         entity_id: media_player.tv2
+         media_content_id: '{{ states.input_text.tv2_channel.state }}'
          media_content_type: 'channel'
 
