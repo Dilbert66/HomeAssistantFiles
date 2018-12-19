@@ -34,6 +34,9 @@ You can't use both at the same time as they both use the same /alexa/smart_home 
 
 - added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
+**openmqtt.py** <br/>
+- same functions as the broadlink module except uses a diy openmqttgateway module.  I built mine from a very inexpensive Sonoff RF gateway box by adding an IR transmitter to it.   
+
 
 ## Installation
 ## NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
