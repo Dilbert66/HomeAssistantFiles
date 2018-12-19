@@ -1,8 +1,10 @@
-# ALEXA - Broadlink - Home Assistant TV controller including channel selection.
+# ALEXA - Broadlink/OpenMQTT - Home Assistant TV controller including channel selection.
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
 default Home Assistant Alexa component module.
+
+** Update **" : added Openmqtt media player module. Not fully tested yet
 
 ## Background
 I was using the Broadlink Alexa skill and found it had a tendency to keep
@@ -32,6 +34,7 @@ You can't use both at the same time as they both use the same /alexa/smart_home 
 
 - added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
+
 ## Installation
 ## NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
 
@@ -47,10 +50,11 @@ alexa:
   smarter_home:  #enable custom Alexa component
 
 media_player:
-  - platform:  broadlink  #enable broadlink component
-    host: 192.168.1.11    #ip address of broadlink device
-    mac: '77:FF:77:55:CC:66'  # mac address of broadlink device
+  - platform:  broadlink  #enable broadlink component. options: broadlink / openmqtt
+    host: 192.168.1.11    #ip address of broadlink device - not needed for openmqtt
+    mac: '77:FF:77:55:CC:66'  # mac address of broadlink device - not needed for openmqtt
     name: tv                  # friendly name used by Alexa or HA console
+    command_topic: /mqtt/command/topic  # required by openmqtt
     ping_host: 192.168.1.12  # ip adress of smart tv to detect it's state  - optional
     channels:     # list by lowercase name and associated channel number - used for finding channels by name - optional
         city: 7
