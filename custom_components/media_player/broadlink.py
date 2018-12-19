@@ -128,7 +128,6 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
         self._source = None
         
         self._first_pop_up = True
-        self._disallow_on_ir = False
         
         sources_list = []
         for (key, value) in self._commands[CONF_INPUTS].items():
@@ -259,17 +258,13 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
         
     def media_previous_track(self):
         if self._state == STATE_OFF:
-            self._disallow_on_ir = True
-            self._state = STATE_ON
-            self._disallow_on_ir = False
+            self._state = STATE_IDLE
         self.send_ir(CONF_CODES, 'previous_channel')
         self.schedule_update_ha_state()
 
     def media_next_track(self):
         if self._state == STATE_OFF:
-            self._disallow_on_ir = True
-            self._state = STATE_ON
-            self._disallow_on_ir = False
+            self._state = STATE_IDLE
         self.send_ir(CONF_CODES, 'next_channel')
         self.schedule_update_ha_state()
 
@@ -358,8 +353,8 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
                             str(DEFAULT_PING_TIMEOUT), str(self._ping_host)]
 
             status = sp.call(ping_cmd, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-            self._state = STATE_ON if not bool(status) else STATE_OFF
+            self._state = STATE_IDLE if not bool(status) else STATE_OFF
         elif self._power_cons_entity_id:
-            self._state = STATE_ON if self._current_power_cons > self._power_cons_threshold else STATE_OFF
+            self._state = STATE_IDLE if self._current_power_cons > self._power_cons_threshold else STATE_OFF
             
 
