@@ -1,4 +1,4 @@
-# ALEXA - Broadlink/OpenMQTT - Home Assistant Media Player/TV controller including channel selection.
+# Alexa - Broadlink/OpenMQTT - Home Assistant Media Player/TV controller including channel selection.
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
@@ -35,7 +35,7 @@ You can't use both at the same time as they both use the same /alexa/smart_home 
 - added input_text config option in configuration.yaml to allow changing channel from the HA console just by entering the channel number or callsign.
 
 **openmqtt.py** <br/>
-- same functions as the broadlink module except uses a diy openmqttgateway module.  I built mine from a very inexpensive Sonoff RF gateway box by adding an IR transmitter to it.   
+- same functions as the broadlink module except uses a diy openmqttgateway module.  I built mine from a very inexpensive Sonoff RF bridge by adding an IR transmitter to it. 
 - for more info about building one or getting ir codes visit: https://github.com/1technophile/OpenMQTTGateway/wiki/User-guide-IR
 
 
