@@ -4,7 +4,7 @@ This customization uses a modified broadlink.py file from from Vassilis Panos's 
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
 default Home Assistant Alexa component module.
 
-** Update **" : added Openmqtt media player module. Not fully tested yet
+** Update **" : added Openmqtt media player module. Tested and working.
 
 ## Background
 I was using the Broadlink Alexa skill and found it had a tendency to keep
