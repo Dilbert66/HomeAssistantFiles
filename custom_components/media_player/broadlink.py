@@ -18,6 +18,7 @@ from homeassistant.const import (
     CONF_HOST, CONF_MAC, CONF_TIMEOUT, STATE_OFF, STATE_ON,
     STATE_PLAYING, STATE_PAUSED, STATE_UNKNOWN, CONF_NAME, CONF_FILENAME)
 from homeassistant.helpers.event import (async_track_state_change)
+#from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.core import callback
 from configparser import ConfigParser
 from base64 import b64encode, b64decode
@@ -298,13 +299,6 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
         self.schedule_update_ha_state()
         
     def select_source(self, source):
-        """
-        #since the tv can be turned on by remote or from HA , state is not known so we can't force this.
-        if self._state == STATE_OFF:
-            self._disallow_on_ir = True
-            self._state = STATE_ON
-            self._disallow_on_ir = False
-"""
 #        if self._first_pop_up == True:
  #           self._source = None
  #           self._first_pop_up = False
@@ -318,8 +312,9 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
         if media_type != MEDIA_TYPE_CHANNEL:
             _LOGGER.error('Unsupported media type')
             return
+        media_id=media_id.lower().strip()
+
         if not media_id.isdigit():
-            media_id=media_id.lower()
             #we have a channel name instead so fetch channel
             if media_id in self._commands[CONF_CHANNELS].keys():
                 media_id=self._commands[CONF_CHANNELS][media_id]
