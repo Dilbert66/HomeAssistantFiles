@@ -9,7 +9,7 @@ import time
 import voluptuous as vol
 import homeassistant.util as util
 import homeassistant.helpers.config_validation as cv
-
+import re
 from homeassistant.components import mqtt
 from homeassistant.components.media_player import (
     SUPPORT_TURN_ON, SUPPORT_TURN_OFF, SUPPORT_VOLUME_MUTE, 
@@ -46,15 +46,20 @@ SUPPORT_IR_TV = SUPPORT_TURN_OFF | SUPPORT_TURN_ON | \
 CONF_CODES='codes'
 CONF_INPUTS='sources'	
 CONF_CHANNELS='channels'
+CONF_COMMAND_TOPICS='command_topics'
 CONF_COMMAND_TOPIC='command_topic'
 
 CODES_SCHEMA = vol.Schema({cv.slug: cv.string})
 INPUTS_SCHEMA = vol.Schema({'name':cv.string,'code':cv.string})
 CHANNELS_SCHEMA = vol.Schema({'name':cv.string,'channel':cv.string})
+TOPICS_SCHEMA = vol.Schema({'topic':cv.string,'type':cv.string})
+
 	
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-    vol.Required(CONF_COMMAND_TOPIC): cv.string,
+#    vol.Required(CONF_COMMAND_TOPICS): TOPICS_SCHEMA,
+    vol.Required(CONF_COMMAND_TOPICS, default={}):
+        vol.Or(cv.ensure_list(TOPICS_SCHEMA), TOPICS_SCHEMA),
     vol.Optional(CONF_PING_HOST): cv.string,
     vol.Optional(CONF_POWER_CONS_SENSOR): cv.entity_id,
     vol.Optional(CONF_POWER_CONS_THRESHOLD, default=10): cv.positive_int,
@@ -72,15 +77,23 @@ async def async_setup_platform(hass, config, async_add_devices, discovery_info=N
     #ip_addr = config.get(CONF_HOST)
     #mac_addr = binascii.unhexlify(config.get(CONF_MAC).encode().replace(b':', b''))
     ir_codes={}
+    ir_codes[CONF_COMMAND_TOPICS]={}
     ir_codes[CONF_CODES]={}
     ir_codes[CONF_INPUTS]={}
     ir_codes[CONF_CHANNELS]={}
     ir_codes[CONF_CODES]=config.get(CONF_CODES)
-    ir_codes[CONF_COMMAND_TOPIC]=config.get(CONF_COMMAND_TOPIC)
-
+    
     for channel in config.get(CONF_CHANNELS):
         key=channel['name'].lower().strip()
         ir_codes[CONF_CHANNELS][key]=channel['channel']
+
+    
+    for topic in config.get(CONF_COMMAND_TOPICS):
+        ir_codes[CONF_COMMAND_TOPICS][topic['type']]=topic['topic']
+        if CONF_COMMAND_TOPIC not in ir_codes.keys():
+            ir_codes[CONF_COMMAND_TOPIC]=topic['topic']
+
+        
 
     for input in config.get(CONF_INPUTS):
         ir_codes[CONF_INPUTS][input['name']]=input['code']
@@ -163,11 +176,20 @@ class MQTTIRMediaPlayer(MediaPlayerDevice):
         commands = ircode.split("|")
        
         for command in commands: 
+            topic=self._commands[CONF_COMMAND_TOPIC]
+            r=re.search('^\s*((.+?):)(.+)',command)
             payload=command                 
+
+            if r:
+                ty=r.group(2).strip()
+                if ty in self._commands[CONF_COMMAND_TOPICS].keys():
+                    payload=r.group(3)
+                    topic=self._commands[CONF_COMMAND_TOPICS][ty]
+
             self._ir_device.async_publish(
-             self.hass, self._commands[CONF_COMMAND_TOPIC],payload ,self._qos 
+             self.hass,topic,payload ,self._qos 
                ,self._retain)
-            _LOGGER.debug('in openmqtt sent command %s, %s', self._commands[CONF_COMMAND_TOPIC],command)
+            _LOGGER.debug('in openmqtt sent command %s, %s', topic,payload)
                 
             if len(commands) > 1:
                 time.sleep(.500)
