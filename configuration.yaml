@@ -11,9 +11,12 @@ media_player:
     name: tv 
     ping_host: 192.168.1.12
     channels:
-        city: 7
-        pulse: 24
-        amc: 31
+        - name: city
+          channel: 7
+        - name: pulse24
+          channel: 24
+        - name: amc
+          channel: 31
     codes:
         turn_on: JgBQAAABKZEVERQRFBEUERUQFRAVNRUQFTYUNhU1FTUVNRU2FBEVNRUQFTUVEBURFDYVEBUQFRAVNRUQFTYUNhUQFTUVNRU2FAAFFQABKEkTAA0FAAAAAAAAAAA= | JgBkAG5vG1QbVBscG1QbVBtUG1QcUxwbHBwbHBscGxwcUxwcGxwbHBscHBwbVBtUG1QbAATXbm8bVBtUGxwbVBtUG1QbVBtUGxwcGxwcGxwbHBxTHBscHBscGxwcGxxTHFMcUxwADQUAAAAA
         turn_off: JgBQAAABKZEVERQRFBEUERUQFRAVNRUQFTYUNhU1FTUVNRU2FBEVNRUQFTUVEBURFDYVEBUQFRAVNRUQFTYUNhUQFTUVNRU2FAAFFQABKEkTAA0FAAAAAAAAAAA= | JgBkAG5vG1QbVBscG1QbVBtUG1QcUxwbHBwbHBscGxwcUxwcGxwbHBscHBwbVBtUG1QbAATXbm8bVBtUGxwbVBtUG1QbVBtUGxwcGxwcGxwbHBxTHBscHBscGxwcGxxTHFMcUxwADQUAAAAA
