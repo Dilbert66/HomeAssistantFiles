@@ -8,7 +8,7 @@ media_player:
     command_topics:
         - topic:  "home/OpenMQTTGateway/commands/IR_GC"
           type: ir
-        - topic:  "home/OpenMQTTGateway/commands/RF_GC"
+        - topic:  "home/OpenMQTTGateway/commands/MQTTto433"
           type: rf
     name: tv2
     channels:
