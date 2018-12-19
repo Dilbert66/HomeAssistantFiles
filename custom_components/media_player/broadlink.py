@@ -11,11 +11,11 @@ import homeassistant.util as util
 import homeassistant.helpers.config_validation as cv
 
 from homeassistant.components.media_player import (
-    SUPPORT_TURN_ON, SUPPORT_TURN_OFF, SUPPORT_VOLUME_MUTE, 
+    SUPPORT_TURN_ON, SUPPORT_TURN_OFF, SUPPORT_VOLUME_MUTE,SUPPORT_PAUSE,SUPPORT_STOP, 
     SUPPORT_VOLUME_STEP, SUPPORT_SELECT_SOURCE, SUPPORT_PREVIOUS_TRACK,
     SUPPORT_NEXT_TRACK, MediaPlayerDevice, PLATFORM_SCHEMA, MEDIA_TYPE_CHANNEL, SUPPORT_PLAY,  SUPPORT_PLAY_MEDIA)
 from homeassistant.const import (
-    CONF_HOST, CONF_MAC, CONF_TIMEOUT, STATE_OFF, STATE_ON,
+    CONF_HOST, CONF_MAC, CONF_TIMEOUT, STATE_OFF, STATE_ON,STATE_IDLE,
     STATE_PLAYING, STATE_PAUSED, STATE_UNKNOWN, CONF_NAME, CONF_FILENAME)
 from homeassistant.helpers.event import (async_track_state_change)
 from homeassistant.core import callback
@@ -235,22 +235,25 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
         
     def turn_on(self):
         self.send_ir(CONF_CODES,'turn_on')
-        self._state = STATE_ON
+        self._state = STATE_IDLE
         self._source = None
         self.schedule_update_ha_state()
     
     def media_play(self):
         self.send_ir(CONF_CODES, 'play')
+        self._state=STATE_PLAYING
         self.schedule_update_ha_state()
         return
 
     def media_pause(self):
         self.send_ir(CONF_CODES, 'pause')
+        self._state=STATE_PAUSED
         self.schedule_update_ha_state()
         return
         
     def media_stop(self):
         self.send_ir(CONF_CODES, 'stop')
+        self._state=STATE_IDLE
         self.schedule_update_ha_state()
         return
         
