@@ -36,6 +36,7 @@ You can't use both at the same time as they both use the same /alexa/smart_home 
 
 **openmqtt.py** <br/>
 - same functions as the broadlink module except uses a diy openmqttgateway module.  I built mine from a very inexpensive Sonoff RF gateway box by adding an IR transmitter to it.   
+- for more info about building one or getting ir codes visit: https://github.com/1technophile/OpenMQTTGateway/wiki/User-guide-IR
 
 
 ## Installation
