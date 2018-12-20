@@ -1,4 +1,4 @@
-# Alexa - Broadlink/OpenMQTT - Home Assistant Media Player/TV controller including channel selection.
+# Alexa - Broadlink/OpenMQTTGateway - Home Assistant Media Player/TV controller including channel selection.
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
