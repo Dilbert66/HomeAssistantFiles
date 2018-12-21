@@ -353,8 +353,15 @@ class BroadlinkIRMediaPlayer(MediaPlayerDevice):
                             str(DEFAULT_PING_TIMEOUT), str(self._ping_host)]
 
             status = sp.call(ping_cmd, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-            self._state = STATE_IDLE if not bool(status) else STATE_OFF
-        elif self._power_cons_entity_id:
-            self._state = STATE_IDLE if self._current_power_cons > self._power_cons_threshold else STATE_OFF
-            
+            if bool(status):
+                self._state=STATE_OFF
+            else:
+                if self._state==STATE_OFF:
+                    self._state=STATE_IDLE
 
+        elif self._power_cons_entity_id:
+            if self._current_power_cons <= self._power_cons_threshold:
+                self._state=STATE_OFF
+            else:
+                if self._state==STATE_OFF:
+                    self._state=STATE_IDLE

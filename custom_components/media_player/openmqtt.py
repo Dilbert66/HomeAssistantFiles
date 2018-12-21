@@ -1,4 +1,4 @@
-
+import asyncio
 import logging
 import binascii
 import socket
@@ -234,7 +234,7 @@ class MQTTIRMediaPlayer(MediaPlayerDevice):
         
     def turn_on(self):
         self.send_ir(CONF_CODES,'turn_on')
-        self._state = STATE_IDLE
+        self._state = STATE_PLAYING
         self._source = None
         self.schedule_update_ha_state()
     
@@ -353,8 +353,17 @@ class MQTTIRMediaPlayer(MediaPlayerDevice):
                             str(DEFAULT_PING_TIMEOUT), str(self._ping_host)]
 
             status = sp.call(ping_cmd, stdout=sp.DEVNULL, stderr=sp.DEVNULL)
-            self._state = STATE_IDLE if not bool(status) else STATE_OFF
+            if bool(status):
+                self._state=STATE_OFF
+            else:
+                if self._state==STATE_OFF:
+                    self._state=STATE_IDLE
+
         elif self._power_cons_entity_id:
-            self._state = STATE_IDLE if self._current_power_cons > self._power_cons_threshold else STATE_OFF
-            
+            if self._current_power_cons <= self._power_cons_threshold:
+                self._state=STATE_OFF
+            else:
+                if self._state==STATE_OFF:
+                    self._state=STATE_IDLE
+                
 
