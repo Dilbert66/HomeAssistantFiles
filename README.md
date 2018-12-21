@@ -1,4 +1,4 @@
-# Alexa - Broadlink/OpenMQTT - Home Assistant Media Player/TV controller including channel selection.
+# Alexa - Broadlink/OpenMQTTGateway - Home Assistant Media Player/TV controller including channel selection.
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
@@ -40,7 +40,7 @@ You can't use both at the same time as they both use the same /alexa/smart_home 
 
 
 ## Installation
-## NOTE: You MUST use Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents.
+## NOTE: You must be using Haaska or the HA cloud integration for the Alexa component to work. If not you will need to create your own Alexa intents. 
 
 1. create a "custom_components" directory in your HA configuration directory and copy the alexa and media_player subdirectories into it.
 2. add the config options in your configuration.yaml and automations.yaml.  Of course you'll need to use your own IR codes for the functions.
