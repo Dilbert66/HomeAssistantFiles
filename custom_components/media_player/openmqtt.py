@@ -34,7 +34,7 @@ CONF_PING_HOST = 'ping_host'
 CONF_POWER_CONS_SENSOR = 'power_consumption_entity'
 CONF_POWER_CONS_THRESHOLD = 'power_consumption_threshold'
 
-DEFAULT_NAME = 'IR Media Player'
+DEFAULT_NAME = 'OPENMQTT IR Media Player'
 DEFAULT_PING_TIMEOUT = 1
 KEY_PRESS_TIMEOUT=0.5
 VOLUME_STEPS=1
@@ -48,6 +48,10 @@ CONF_INPUTS='sources'
 CONF_CHANNELS='channels'
 CONF_COMMAND_TOPICS='command_topics'
 CONF_COMMAND_TOPIC='command_topic'
+CONF_DEFAULT_ON_STATE='default_on_state'
+
+ON_STATES=[STATE_ON,STATE_IDLE,STATE_PLAYING,STATE_PAUSED]
+
 
 CODES_SCHEMA = vol.Schema({cv.slug: cv.string})
 INPUTS_SCHEMA = vol.Schema({'name':cv.string,'code':cv.string})
@@ -63,6 +67,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_PING_HOST): cv.string,
     vol.Optional(CONF_POWER_CONS_SENSOR): cv.entity_id,
     vol.Optional(CONF_POWER_CONS_THRESHOLD, default=10): cv.positive_int,
+    vol.Optional(CONF_DEFAULT_ON_STATE):vol.In(ON_STATES),
     vol.Optional(CONF_CODES, default={}):
         vol.Or(cv.ensure_list(CODES_SCHEMA), CODES_SCHEMA),
     vol.Optional(CONF_INPUTS, default={}):
@@ -82,7 +87,8 @@ async def async_setup_platform(hass, config, async_add_devices, discovery_info=N
     ir_codes[CONF_INPUTS]={}
     ir_codes[CONF_CHANNELS]={}
     ir_codes[CONF_CODES]=config.get(CONF_CODES)
-    
+    ir_codes[CONF_DEFAULT_ON_STATE]=config.get(CONF_DEFAULT_ON_STATE)    
+
     for channel in config.get(CONF_CHANNELS):
         key=channel['name'].lower().strip()
         ir_codes[CONF_CHANNELS][key]=channel['channel']
@@ -234,7 +240,10 @@ class MQTTIRMediaPlayer(MediaPlayerDevice):
         
     def turn_on(self):
         self.send_ir(CONF_CODES,'turn_on')
-        self._state = STATE_PLAYING
+        if self._commands[CONF_DEFAULT_ON_STATE]:
+            self._state=self._commands[CONF_DEFAULT_ON_STATE]
+        else:
+            self._state=STATE_IDLE
         self._source = None
         self.schedule_update_ha_state()
     
@@ -357,13 +366,19 @@ class MQTTIRMediaPlayer(MediaPlayerDevice):
                 self._state=STATE_OFF
             else:
                 if self._state==STATE_OFF:
-                    self._state=STATE_IDLE
+                    if self._commands[CONF_DEFAULT_ON_STATE]:
+                        self._state=self._commands[CONF_DEFAULT_ON_STATE]
+                    else:
+                        self._state=STATE_IDLE
 
         elif self._power_cons_entity_id:
             if self._current_power_cons <= self._power_cons_threshold:
                 self._state=STATE_OFF
             else:
                 if self._state==STATE_OFF:
-                    self._state=STATE_IDLE
+                    if self._commands[CONF_DEFAULT_ON_STATE]:
+                        self._state=self._commands[CONF_DEFAULT_ON_STATE]
+                    else:
+                        self._state=STATE_IDLE
                 
 

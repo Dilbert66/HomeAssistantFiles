@@ -11,6 +11,7 @@ media_player:
         - topic:  "home/OpenMQTTGateway/commands/MQTTto433"
           type: rf
     name: tv2
+    default_on_state: 'playing'
     channels:
         - name: city
           channel: 7
@@ -52,6 +53,7 @@ media_player:
     mac: '78:0F:77:5A:C8:46'
     name: tv 
     ping_host: 192.168.2.237
+    default_on_state: 'playing' #options idle,on,playing,paused - optional
     channels:
         - name: city
           channel: 7
