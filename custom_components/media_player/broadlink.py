@@ -9,7 +9,6 @@ import time
 import voluptuous as vol
 import homeassistant.util as util
 import homeassistant.helpers.config_validation as cv
-import broadlink
 
 from homeassistant.components.media_player import (
     SUPPORT_TURN_ON, SUPPORT_TURN_OFF, SUPPORT_VOLUME_MUTE,SUPPORT_PAUSE,SUPPORT_STOP, 
@@ -94,6 +93,7 @@ async def async_setup_platform(hass, config, async_add_devices, discovery_info=N
     for input in config.get(CONF_INPUTS):
         ir_codes[CONF_INPUTS][input['name']]=input['code']
 
+    import broadlink
 	
     
     broadlink_device = broadlink.rm((ip_addr, 80), mac_addr, None)
