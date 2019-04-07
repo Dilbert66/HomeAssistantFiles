@@ -8,6 +8,8 @@ default Home Assistant Alexa component module.
 
 **Update**: added Openmqtt media player module. Tested and working.
 
+Tested on HA verson 0.83.0
+
 ## Background
 I was using the Broadlink Alexa skill and found it had a tendency to keep
  adding extra digits when responding to a change channel command on my TV.  Since I am also using Home Assistant  (with Haaska) at home, I felt I would 
