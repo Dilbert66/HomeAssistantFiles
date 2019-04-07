@@ -1,6 +1,6 @@
 # Alexa - Broadlink/OpenMQTTGateway - Home Assistant Media Player/TV controller including channel selection.
 
-**NOTE: updated to work on HomeAssistant Version 0.91.1
+
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
@@ -8,7 +8,8 @@ default Home Assistant Alexa component module.
 
 **Update**: added Openmqtt media player module. Tested and working.
 
-Tested on HA verson 0.83.0
+**NOTE: updated to work on HomeAssistant Version 0.91.1
+
 
 ## Background
 I was using the Broadlink Alexa skill and found it had a tendency to keep
