@@ -1864,11 +1864,11 @@ async def async_api_skipchannel(hass, config, directive, context):
      }   
     if channel > 0:
         await hass.services.async_call(
-          entity.domain, media_player.const.SERVICE_MEDIA_NEXT_TRACK,
+          entity.domain, SERVICE_MEDIA_NEXT_TRACK,
           data, blocking=False, context=context)
     if channel < 0:
         await hass.services.async_call(
-          entity.domain, media_player.const.SERVICE_MEDIA_PREVIOUS_TRACK,
+          entity.domain, SERVICE_MEDIA_PREVIOUS_TRACK,
           data, blocking=False, context=context)
         
 
@@ -1905,7 +1905,7 @@ async def async_api_adjust_volume(hass, config, directive, context):
 
     return directive.response()
 
-
+#alt change
 @HANDLERS.register(('Alexa.StepSpeaker', 'AdjustVolume'))
 async def async_api_adjust_volume_step(hass, config, directive, context):
     """Process an adjust volume step request."""
@@ -1913,41 +1913,34 @@ async def async_api_adjust_volume_step(hass, config, directive, context):
     # each conmponent handles it differently e.g. via config.
     # For now we use the volumeSteps returned to figure out if we
     # should step up/down
+    
+    entity = directive.entity
     volume_int = int(directive.payload['volumeSteps'])
     isDefault = bool(directive.payload['volumeStepsDefault'])
+    defaultSteps=5
+
+    if hasattr(entity,'volume_default_steps'):
+      defaultSteps=getattr(entity,'volume_default_steps')
+
     if isDefault:
         if volume_int < 0:
-            volume_int=-5 # the default is 10 which is too much
+            volume_int=-defaultSteps # the default is 10 which is too much
         else:
-            volume_int=5
-    if volume_int > 0 and volume_int < 51:
-        volume_int=volume_int+50
-    elif volume_int < 0:
-        volume_int=abs(volume_int)
-        if volume_int > 50:
-            volume_int=volume_int-50
-
-    volume_step = round(float(volume_int / 100), 2)
-
-    _LOGGER.debug("Received Alexa stepspeaker ajustvolume  adjust volume:%s  %s", volume_step,volume_int)
-
-    entity = directive.entity
-
-    data = {
-        ATTR_ENTITY_ID: entity.entity_id,
-    }
-    
-    if volume_int != 0:
+            volume_int=defaultSteps
+    if volume_int != 0:    
+        _LOGGER.debug("Processing Stepspeaker ajustvolume adjust volume: %s", volume_int)
         data = {
-            ATTR_ENTITY_ID: entity.entity_id,
-            media_player.const.ATTR_MEDIA_VOLUME_LEVEL: volume_step
-        }
-        await hass.services.async_call(
-            entity.domain, media_player.const.SERVICE_VOLUME_SET,
-            data, blocking=False, context=context)
-        
-        
-
+            ATTR_ENTITY_ID: entity.entity_id
+        }   
+        for step in range(0,abs(volume_int)):
+            if volume_int > 0:
+                await hass.services.async_call(
+                    entity.domain, SERVICE_VOLUME_UP,
+                    data, blocking=False, context=context)
+            elif volume_int < 0:
+                await hass.services.async_call(
+                    entity.domain, SERVICE_VOLUME_DOWN,
+                    data, blocking=False, context=context)
     return directive.response()
 
 
@@ -1979,7 +1972,7 @@ async def async_api_set_volume(hass, config, directive, context):
     }
 
     await hass.services.async_call(
-        entity.domain, SERVICE_VOLUME_SET,
+        entity.domain, SERVICE_VOLUME_STEP,
         data, blocking=False, context=context)
 
     return directive.response()
@@ -2030,7 +2023,7 @@ async def async_api_adjust_volume(hass, config, directive, context):
     # read current state
     try:
         current = math.floor(int(current_level * 100))
-    except ZeroDivisionError:
+    except :
         current = 0
 
     volume = float(max(0, volume_delta + current) / 100)
@@ -2043,32 +2036,6 @@ async def async_api_adjust_volume(hass, config, directive, context):
     await hass.services.async_call(
         entity.domain, SERVICE_VOLUME_SET,
         data, blocking=False, context=context)
-
-    return directive.response()
-
-
-@HANDLERS.register(('Alexa.StepSpeaker', 'AdjustVolume'))
-async def async_api_adjust_volume_step(hass, config, directive, context):
-    """Process an adjust volume step request."""
-    # media_player volume up/down service does not support specifying steps
-    # each component handles it differently e.g. via config.
-    # For now we use the volumeSteps returned to figure out if we
-    # should step up/down
-    volume_step = directive.payload['volumeSteps']
-    entity = directive.entity
-
-    data = {
-        ATTR_ENTITY_ID: entity.entity_id,
-    }
-
-    if volume_step > 0:
-        await hass.services.async_call(
-            entity.domain, SERVICE_VOLUME_UP,
-            data, blocking=False, context=context)
-    elif volume_step < 0:
-        await hass.services.async_call(
-            entity.domain, SERVICE_VOLUME_DOWN,
-            data, blocking=False, context=context)
 
     return directive.response()
 
