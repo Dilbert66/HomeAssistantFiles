@@ -1,6 +1,7 @@
 # Alexa - Broadlink/OpenMQTTGateway - Home Assistant Media Player/TV controller including channel selection.
 
-
+************* UPDATE  *****
+************* The Alexa Change channel patch has now been added to the main Homeassistant project dev branch so this version of the Alexa smart home  custom component is no longer needed. ********
 
 This customization uses a modified broadlink.py file from from Vassilis Panos's project at  
 https://github.com/vpnmaster/homeassistant-custom-components as well as a modified version of the 
